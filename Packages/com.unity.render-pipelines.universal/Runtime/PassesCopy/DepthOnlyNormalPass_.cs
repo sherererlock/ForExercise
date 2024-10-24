@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
 
@@ -7,11 +8,16 @@ namespace UnityEngine.Rendering.Universal.Internal
     public class DepthNormalOnlyPass_ : ScriptableRenderPass
     {
         private static readonly ShaderTagId k_ShaderTagID = new ShaderTagId("DepthNormalOnly");
+        private static readonly List<ShaderTagId> k_DepthNormals = new List<ShaderTagId> { new ShaderTagId("DepthNormals"), new ShaderTagId("DepthNormalsOnly") };
+        private static readonly int s_CameraDepthTextureID = Shader.PropertyToID("_CameraDepthTexture");
+        private static readonly int s_CameraNormalsTextureID = Shader.PropertyToID("_CameraNormalsTexture");
+        
         private RTHandle depthRT;
         private RTHandle normalRT;
         private FilteringSettings m_FilteringSettings;
         private RenderPassEvent renderpassEvent;
         private PassData passData;
+        internal List<ShaderTagId> shaderTagIds { get; set; }
 
         public DepthNormalOnlyPass_(RenderPassEvent evt, RenderQueueRange renderQueueRange, LayerMask layerMask)
         {
@@ -19,6 +25,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             renderpassEvent = evt;
             m_FilteringSettings = new FilteringSettings(renderQueueRange, layerMask);
             passData = new PassData();
+            shaderTagIds = k_DepthNormals;
         }
 
         public void Setup(RTHandle depthAttachment, RTHandle normalRT)
@@ -38,7 +45,7 @@ namespace UnityEngine.Rendering.Universal.Internal
         {
             SortingCriteria sortingFlag = cameraData.defaultOpaqueSortFlags;
             DrawingSettings drawingSetting =
-                RenderingUtils.CreateDrawingSettings(k_ShaderTagID, renderingData, cameraData, lightData, sortingFlag);
+                RenderingUtils.CreateDrawingSettings(shaderTagIds, renderingData, cameraData, lightData, sortingFlag);
             drawingSetting.perObjectData = PerObjectData.None;
             return new RendererListParams(renderingData.cullResults, drawingSetting, m_FilteringSettings);
         }
@@ -69,7 +76,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             internal RendererListHandle rendererListHanlde;
         }
 
-        public void Render(RenderGraph renderGraph, ContextContainer framedata, ref TextureHandle normalRT, ref TextureHandle depthRT)
+        public void Render(RenderGraph renderGraph, ContextContainer framedata, TextureHandle normalRT, TextureHandle depthRT, bool setGlobalDepth, bool setGlobalNormal)
         {
             UniversalRenderingData universalRenderingData = framedata.Get<UniversalRenderingData>();
             UniversalCameraData cameraData = framedata.Get<UniversalCameraData>();
@@ -84,6 +91,12 @@ namespace UnityEngine.Rendering.Universal.Internal
 
                 builder.SetRenderAttachment(normalRT, 0, AccessFlags.Write);
                 builder.SetRenderAttachmentDepth(depthRT, AccessFlags.Write);
+                
+                if(setGlobalDepth)
+                    builder.SetGlobalTextureAfterPass(depthRT, s_CameraDepthTextureID);
+                
+                if(setGlobalNormal)
+                    builder.SetGlobalTextureAfterPass(normalRT, s_CameraNormalsTextureID);
 
                 builder.AllowPassCulling(false);
                 builder.SetRenderFunc((PassData data, RasterGraphContext context) =>

@@ -1791,15 +1791,15 @@ namespace UnityEngine.Rendering.Universal
         {
             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
 
-            if (m_RenderingLayerProvidesByDepthNormalPass)
-            {
-                m_DepthNormalPrepass.enableRenderingLayers = true;
-                m_DepthNormalPrepass.renderingLayersMaskSize = m_RenderingLayersMaskSize;
-            }
-            else
-            {
-                m_DepthNormalPrepass.enableRenderingLayers = false;
-            }
+            // if (m_RenderingLayerProvidesByDepthNormalPass)
+            // {
+            //     m_DepthNormalPrepass.enableRenderingLayers = true;
+            //     m_DepthNormalPrepass.renderingLayersMaskSize = m_RenderingLayersMaskSize;
+            // }
+            // else
+            // {
+            //     m_DepthNormalPrepass.enableRenderingLayers = false;
+            // }
 
             if (renderingModeActual == RenderingMode.Deferred)
             {
@@ -1814,7 +1814,7 @@ namespace UnityEngine.Rendering.Universal
 
             TextureHandle normalsTexture = resourceData.cameraNormalsTexture;
             TextureHandle renderingLayersTexture = resourceData.renderingLayersTexture;
-            m_DepthNormalPrepass.Render(renderGraph, frameData, normalsTexture, depthTarget, renderingLayersTexture, batchLayerMask, setGlobalDepth, setGlobalTextures);
+            m_DepthNormalPrepass.Render(renderGraph, frameData, normalsTexture, depthTarget,  setGlobalDepth, setGlobalTextures);
 
             if (m_RequiresRenderingLayer)
                 SetRenderingLayersGlobalTextures(renderGraph);
