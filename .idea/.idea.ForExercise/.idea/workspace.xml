@@ -8,6 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnlyNormalPass_.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnlyNormalPass_.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnly_.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnly_.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/PassTemplate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/PassTemplate.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Unity RenderGraph.md" beforeDir="false" afterPath="$PROJECT_DIR$/Unity RenderGraph.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +40,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="rider.run.widget.enabled.cache" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -71,7 +75,8 @@
       <option name="presentableId" value="Default" />
       <updated>1729740274288</updated>
       <workItem from="1729740278220" duration="48000" />
-      <workItem from="1729740494490" duration="2319000" />
+      <workItem from="1729740494490" duration="2350000" />
+      <workItem from="1729777446144" duration="1018000" />
     </task>
     <servers />
   </component>

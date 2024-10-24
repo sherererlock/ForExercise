@@ -6,7 +6,7 @@ namespace UnityEngine.Rendering.Universal.Internal
 {
     public class DepthOnlyPass_ : ScriptableRenderPass
     {
-        private static readonly ShaderTagID k_ShaderTagID = new ShaderTagID("DepthOnly");
+        private static readonly ShaderTagId k_ShaderTagID = new ShaderTagId("DepthOnly");
         private RTHandle destination;
 
         private RenderPassEvent renderPassEvent;
@@ -33,12 +33,12 @@ namespace UnityEngine.Rendering.Universal.Internal
             internal RendererListHandle rendererList;
         }
 
-        private RenderListParams InitRendererListParams(UniversalRenderingData renderingData, UniversalCameraData cameraData, UniversalLightData lightData)
+        private RendererListParams InitRendererListParams(UniversalRenderingData renderingData, UniversalCameraData cameraData, UniversalLightData lightData)
         {
             SortingCriteria sortingCriteria = cameraData.defaultOpaqueSortFlags;
             DrawingSettings drawingSettings = RenderingUtils.CreateDrawingSettings(k_ShaderTagID, renderingData, cameraData, lightData, sortingCriteria);
             drawingSettings.perObjectData = PerObjectData.None;
-            return new RenderListParams(renderingData.cullingResults, drawingSettings, m_FilteringSettings);
+            return new RendererListParams(renderingData.cullResults, drawingSettings, m_FilteringSettings);
         }
 
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
@@ -47,7 +47,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             ConfigureClear(ClearFlag.All, Color.black);
         }
 
-        private static void ExecutePass(CommandBuffer cmd, RendererList rendererList)
+        private static void ExecutePass(RasterCommandBuffer cmd, RendererList rendererList)
         {
             using (new ProfilingScope(cmd, ProfilingSampler.Get(URPProfileId.DepthPrepass)))
             {
@@ -62,9 +62,9 @@ namespace UnityEngine.Rendering.Universal.Internal
             UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
             UniversalLightData lightData = frameData.Get<UniversalLightData>();
 
-            RendererListParams rendererListParams = InitRendererListParams(renderingData, cameraData, lightData);
-            RendererList rendererList = context.CreateRendererList(rendererListParams);
-            ExecutePass(renderingData.commandBuffer, rendererList);
+            RendererListParams rendererListParams = InitRendererListParams(universalRenderingData, cameraData, lightData);
+            RendererList rendererList = context.CreateRendererList(ref rendererListParams);
+            ExecutePass(CommandBufferHelpers.GetRasterCommandBuffer(renderingData.commandBuffer), rendererList);
         }
 
         public void Render(RenderGraph renderGraph, ref RenderingData renderingData, ref TextureHandle cameraDepthTexture)
@@ -74,12 +74,12 @@ namespace UnityEngine.Rendering.Universal.Internal
             UniversalCameraData cameraData = frameData.Get<UniversalCameraData>();
             UniversalLightData lightData = frameData.Get<UniversalLightData>();
 
-            using (var builder = renderGraph.AddRasterPass<PassData>("DepthOnly Prepass",out var PassData passData, base.ProfilingSampler))
+            using (var builder = renderGraph.AddRasterRenderPass<PassData>("DepthOnly Prepass",out PassData passData, base.profilingSampler))
             {
                 RendererListParams rendererListParams = InitRendererListParams(universalRenderingData, cameraData, lightData);
-                passData.renderList = renderGraph.CreateRendererList(rendererListParams);
+                passData.rendererList = renderGraph.CreateRendererList(rendererListParams);
 
-                builder.UseRendererList(passData.renderList);
+                builder.UseRendererList(passData.rendererList);
                 
                 builder.SetRenderAttachmentDepth(cameraDepthTexture, AccessFlags.Write);
                 
@@ -88,9 +88,9 @@ namespace UnityEngine.Rendering.Universal.Internal
                 builder.AllowGlobalStateModification(true);
                 builder.EnableFoveatedRasterization(cameraData.xr.supportsFoveatedRendering);
 
-                builder.SetRenderFunc((PassData passData, RenderGraphContext context) =>
+                builder.SetRenderFunc((PassData passData, RasterGraphContext context) =>
                 {
-                    ExecutePass(context.cmd, passData.renderList);
+                    ExecutePass(context.cmd, passData.rendererList);
                 });
                 
             }
