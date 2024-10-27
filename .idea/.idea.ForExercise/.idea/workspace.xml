@@ -26,6 +26,10 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5bf0c891ea345fe93688f835df32fdc1dda00/d1/5a9b2ff2/StencilState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5bf0c891ea345fe93688f835df32fdc1dda00/0a/ef1c2cb4/NativeArray`1.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -79,6 +83,7 @@
       <workItem from="1729777446144" duration="3365000" />
       <workItem from="1729818353431" duration="1218000" />
       <workItem from="1729904010136" duration="8290000" />
+      <workItem from="1729996455286" duration="5185000" />
     </task>
     <servers />
   </component>
