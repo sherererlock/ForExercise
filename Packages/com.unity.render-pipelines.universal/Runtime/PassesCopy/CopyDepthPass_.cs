@@ -47,17 +47,17 @@ namespace UnityEngine.Rendering.Universal.Internal
         {
             passData.copyDepthMaterial = copyToDepthMaterial;
             passData.msaaSample = msaaSample;
-            passData.destination = destination;
             passData.source = source;
             passData.copyToDepth = copyToDepth;
             passData.copyToBackBuffer = copyToBackBuffer;
             passData.cameraData = renderingData.frameData.Get<UniversalCameraData>();
 
-            RasterCommandBuffer cmd = CommandBufferHelpers.GetRasterCommandBuffer(renderingData.commandBuffe);
+            RasterCommandBuffer cmd = CommandBufferHelpers.GetRasterCommandBuffer(renderingData.commandBuffer);
             ExecutePass(cmd, passData);
+            
         }
 
-        public override void Dispose()
+        public  void Dispose()
         {
             CoreUtils.Destroy(copyToDepthMaterial);
         }
