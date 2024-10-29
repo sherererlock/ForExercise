@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2364ad13-89da-4fd7-b9a8-68f20d7ce46c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnly_.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnly_.cs.meta" afterDir="false" />
-    </list>
+    <list default="true" id="2364ad13-89da-4fd7-b9a8-68f20d7ce46c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/AdditionalLightsShadowAtlasLayout.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/DepthNormalOnlyPass.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/DepthOnlyPass.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/PostProcessPass.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/PostProcessPassRenderGraph.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/AdditionalLightsShadowAtlasLayout.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/DepthNormalOnlyPass.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/DepthOnlyPass.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/PostProcessPass.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/PostProcessPassRenderGraph.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DepthOnly_.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/PassTemplate.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/UniversalRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/UniversalRenderer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -53,6 +50,7 @@
       <workItem from="1729749340765" duration="69000" />
       <workItem from="1729749425948" duration="38000" />
       <workItem from="1729755575304" duration="1906000" />
+      <workItem from="1730080790812" duration="26000" />
     </task>
     <servers />
   </component>
