@@ -3,15 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="e013dd7b-492f-4bb4-a69a-9a6f307fd103" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForExercise/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/DrawObjectsPass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/Passes/DrawObjectsPass.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/CopyColorPass_.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/CopyColorPass_.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/CopyDepthPass_.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/CopyDepthPass_.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DrawObjects_.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/DrawObjects_.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/PassTemplate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/PassesCopy/PassTemplate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/UniversalRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/com.unity.render-pipelines.universal/Runtime/UniversalRenderer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Unity RenderGraph.md" beforeDir="false" afterPath="$PROJECT_DIR$/Unity RenderGraph.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +88,8 @@
       <workItem from="1729818353431" duration="1218000" />
       <workItem from="1729904010136" duration="8290000" />
       <workItem from="1729996455286" duration="5189000" />
-      <workItem from="1730117956268" duration="22000" />
+      <workItem from="1730117956268" duration="3308000" />
+      <workItem from="1730209714966" duration="3889000" />
     </task>
     <servers />
   </component>

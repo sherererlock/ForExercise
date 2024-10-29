@@ -7,7 +7,7 @@ namespace UnityEngine.Rendering.Universal.Internal
     public class CopyColorPass_ : ScriptableRenderPass
     {
         private RTHandle source;
-        private RTHandle desination;
+        private RTHandle destination;
         private Downsampling m_DownSamplingMethod;
         private Material m_CopyColorMaterial;
 
@@ -16,15 +16,19 @@ namespace UnityEngine.Rendering.Universal.Internal
 
         private PassData m_PassData;
         
-        public CopyColorPass_(RenderPassEvent evt, Material copyClolorMat, Material samplingMat, Downsampling downsampling)
+        public CopyColorPass_(RenderPassEvent evt, Material copyClolorMat, Material samplingMat, string customPassName = "")
         {
+            profilingSampler = customPassName != ""
+                ? new ProfilingSampler(customPassName)
+                : ProfilingSampler.Get(URPProfileId.CopyColor);
+            
             renderPassEvent = evt;
             m_CopyColorMaterial = copyClolorMat;
             m_SamplingMaterial = samplingMat;
-            m_DownSamplingMethod = downsampling;
+            m_DownSamplingMethod = Downsampling.None;
         }
         
-        private class PassData
+        public class PassData
         {
             internal Material m_CopyColorMaterial;
             internal Material m_SamplingMaterial;
@@ -39,7 +43,7 @@ namespace UnityEngine.Rendering.Universal.Internal
         {
             this.source = source;
             this.destination = destination;
-            m_DownsamplingMethod = downsampling;
+            m_DownSamplingMethod = downsampling;
         }
 
         /// <inheritdoc />
@@ -50,9 +54,9 @@ namespace UnityEngine.Rendering.Universal.Internal
         }
 
         public static void ConfigureDescriptor(Downsampling method, ref RenderTextureDescriptor textureDescriptor,
-            ref FilterMode filtermode)
+            out FilterMode filtermode)
         {
-            textureDescriptor.msaaSamplers = 1;
+            textureDescriptor.msaaSamples = 1;
             textureDescriptor.depthStencilFormat = GraphicsFormat.None;
             if (method == Downsampling._2xBilinear)
             {
@@ -65,38 +69,38 @@ namespace UnityEngine.Rendering.Universal.Internal
                 textureDescriptor.height = Mathf.Max(1, textureDescriptor.height / 4);
             }
 
-            filtermode = method == Downsampling.Node ? FilterMode.Point : FilterMode.Bilinear;
+            filtermode = method == Downsampling.None ? FilterMode.Point : FilterMode.Bilinear;
         }
 
-        public override void Execute(ScriptableContext context, ref RenderingData renderingData)
+        public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
             m_PassData.m_CopyColorMaterial = m_CopyColorMaterial;
             m_PassData.m_SamplingMaterial = m_SamplingMaterial;
             m_PassData.m_DownSamplingMethod = m_DownSamplingMethod;
             m_PassData.sampleOffsetHandle = m_SampleOffsetHandle;
 
-            CommanBuffer cmd = renderingData.commandBuffer;
+            CommandBuffer cmd = renderingData.commandBuffer;
 
-            RasterCommandBuffer rcmd = CommandBufferHelpers.GetRasterCommmandBuffer(cmd);
+            RasterCommandBuffer rcmd = CommandBufferHelpers.GetRasterCommandBuffer(cmd);
 
             ScriptableRenderer.SetRenderTarget(cmd, destination, k_CameraTarget, clearFlag, clearColor);
             ExecutePass(rcmd, m_PassData, source);
         }
 
-        public void Render(RenderGraph renderGraph, ContextContainer frameData, int TextureHandle source, out TextureHandle destination, Downsampling downsampling, ref FilterMode filtermode)
+        public void Render(RenderGraph renderGraph, ContextContainer frameData, out TextureHandle destination, in TextureHandle source, Downsampling downsampling)
         {
             m_DownSamplingMethod = downsampling;
             
             var cameraData = frameData.Get<UniversalCameraData>();
             var descriptor = cameraData.cameraTargetDescriptor;
-            ConfigureDescriptor(downsampling, ref descriptor, filtermode);
+            ConfigureDescriptor(downsampling, ref descriptor, out var filtermode);
 
-            UniversalRender.CreateRenderGraphTexture(renderGraph, descriptor, "_CameraOpaqueTexture", true, filtermode);
+            destination = UniversalRenderer.CreateRenderGraphTexture(renderGraph, descriptor, "_CameraOpaqueTexture", true, filtermode);
             
             using (var builder =
-                   renderGraph.AddRasterPass<PassData>("Copy Color Pass", out var passdata, profilingSampler))
+                   renderGraph.AddRasterRenderPass<PassData>("Copy Color Pass", out var passdata, profilingSampler))
             {
-                builder.SetRenderAttachment(destination, 0, AccessFlags.All);
+                builder.SetRenderAttachment(destination, 0, AccessFlags.Write);
                 builder.UseTexture(source, AccessFlags.Read);
 
                 passdata.source = source;
@@ -108,7 +112,7 @@ namespace UnityEngine.Rendering.Universal.Internal
                 if (destination.IsValid())
                     builder.SetGlobalTextureAfterPass(destination, Shader.PropertyToID("_CameraOpaqueTexture"));
 
-                builder.SetRenderFunc((PassData data, RenderGraphContext context) =>
+                builder.SetRenderFunc((PassData data, RasterGraphContext context) =>
                 {
                     ExecutePass(context.cmd, data, data.source);
                 });
@@ -124,7 +128,9 @@ namespace UnityEngine.Rendering.Universal.Internal
 
             using (new ProfilingScope(ProfilingSampler.Get(URPProfileId.CopyColor)))
             {
-                Vector2 viewPortScale = source.useSacle ? new Vector2(ssource.rtHandleProperties.rtHandleScale.x, source.rtHandleProperties.rtHandleScale.y) : Vector2.one
+                Vector2 viewPortScale = source.useScaling
+                    ? new Vector2(source.rtHandleProperties.rtHandleScale.x, source.rtHandleProperties.rtHandleScale.y)
+                    : Vector2.one;
                 switch (downsampling)
                 {
                     case Downsampling.None:
@@ -134,7 +140,7 @@ namespace UnityEngine.Rendering.Universal.Internal
                         Blitter.BlitTexture(cmd, source, viewPortScale, copyClolorMat, 0);
                         break;
                     case Downsampling._4xBox:
-                        samplingMaterial.SetFloat(sampleOffsetShaderHandle, 2);
+                        samplingMat.SetFloat(sampleOffsetHandle, 2);
                         Blitter.BlitTexture(cmd, source, viewPortScale, samplingMat, 0);
                         break;
                     case Downsampling._4xBilinear:
