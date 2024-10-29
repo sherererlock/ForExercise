@@ -48,7 +48,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             cmd.SetGlobalVector(s_DrawObjectsPassData, drawObjectData);
 
             float flipSign = passData.yflip ? 1.0f : 0.0f;
-            Vector4 scaleBias = new Vector4(flipSign, 0.0, passData.yflip ? -1.0f : 1.0f, 0.0);
+            Vector4 scaleBias = new Vector4(flipSign, 0.0f, passData.yflip ? -1.0f : 1.0f, 0.0f);
             cmd.SetGlobalVector(ShaderPropertyId.scaleBias, scaleBias);
             
             RenderingUtils.DrawRendererListObjectsWithError(cmd, ref passData.errorRendererList);
